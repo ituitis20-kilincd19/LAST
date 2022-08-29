@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8" />
+  <title>Socket.IO Fiddle</title>
+  <script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=bJ-W4wq3osTJDD_d2EpPt-Sv25j1j9O5ftT8HtORu2lJrxPqsENC4LstwtFcAcpTFPvVYPp9zVD7CjtnfMIFp_AWO_hD-AtexVR84dehBus" charset="UTF-8"></script>
+
+<style>
+div{
+  background-color: pink;
+}
+  </style>
+</head>
+
+<body >
+<h2>Status: <span id="status">Disconnected</span></h2>
+<h2>Messages:</h2>
+
+<input id="gecmis" type="button" value="DETAİLS"
+       onclick="window.location.href = 'OYUNOYUN.html'" />
+<ul id="messages"></ul>
+<label>USERNAME E ERİŞMEK İÇİN KULLLANICININ ID SİNİ GİRİNİZ</label></br>
+<input id="input"/><br>
+<button id="button" onclick="but()" >ÇAĞIR</button></br>
+<label>YENİ KULLANICI EKLEMEK İÇİN AŞAĞIDAKİ ALANI DOLDURUNUZ</label></br>
+<label>ID</label></br>
+<input id="inpu"/><br>
+<label>KULLANICI ADI</label></br>
+<input id="inp"/><br>
+<label>EMAİL</label></br>
+<input id="ik"/></br>
+<button id="butto" onclick="POST()" >EKLE</button>
+<div id="div"></div>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  import { from} from 'rxjs';
+
+  import axios from 'axios';
+
+</script>
+<script>
+
+
+  const status = document.getElementById('status');
+  const messages = document.getElementById('messages');
+  const input=document.getElementById('input');
+  const inpu=document.getElementById('inpu');
+  const inp=document.getElementById('inp');
+  const ik=document.getElementById('ik');
+ const div=document.getElementById("div");
+  const appendMessage = content => {
+    const item = document.createElement('li');
+    item.textContent = content;
+    messages.appendChild(item);
+  };
+ const yaz=()=>{
+ //  document.createElement("div").append
+ }
+
+  const socket = io({
+    // Socket.IO options
+  });
+
+
+
+
+  socket.on('connect', () => {
+
+    status.innerText = 'Connected';
+
+  });
+ const but=()=>{
+       socket.send(input.value);
+ }
+ const POST=()=>{
+   socket.send(inpu.value+"/"+inp.value+"/"+ik.value);
+ }
+
+  socket.on('connect_error', err => {
+    appendMessage(`event: connect_error | reason: ${err.message}`);
+  });
+
+  socket.on('disconnect', reason => {
+    status.innerText = 'Disconnected';
+    appendMessage(`event: disconnect | reason: ${reason}`);
+  });
+
+  socket.onAny((event, ...args) => {
+    appendMessage("VERİLER :"+` ${args}`);
+  });
+
+
+</script>
+</body>
+
+</html>
